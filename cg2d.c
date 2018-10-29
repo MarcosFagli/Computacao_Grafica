@@ -198,8 +198,8 @@ hpoint * Srn2SrdH(hpoint * ponto, viewport * view) {
   hpoint * dpt;
 
   dpt = (hpoint *) malloc(sizeof(hpoint));
-  dpt->x = view->xmin + round((ponto->x)*(view->xmax - view->xmin)) + view->xmin;
-  dpt->y = view->ymin + round((ponto->y)*(view->ymax - view->ymin)) + view->ymin;
+  dpt->x = view->xmin + round((ponto->x)*(view->xmax - view->xmin) -1);
+  dpt->y = view->ymin + round((ponto->y)*(view->ymax - view->ymin) -1);
   dpt->w = ponto->w;
   dpt->color = ponto->color;
  
@@ -357,7 +357,7 @@ int DrawLineH(hpoint * p1, hpoint * p2, window * win, bufferdevice * dev, viewpo
    
    if (pd1->x == pd2->x) {
      while (j < pd2->y) {
-       dev->buffer[(dev->MaxY - j - 1) * dev->MaxX + i] = color;
+       dev->buffer[(view->ymin + view->ymax - j) * dev->MaxX + i] = color;
        j++;
        }
      }
@@ -365,19 +365,19 @@ int DrawLineH(hpoint * p1, hpoint * p2, window * win, bufferdevice * dev, viewpo
      a = (pd2->y - pd1->y)/(pd2->x - pd1->x);
      b = pd1->y - a*pd1->x;
      while (i < pd2->x) {
-       dev->buffer[(dev->MaxY - j - 1) * dev->MaxX + i] = color;
+       dev->buffer[(view->ymin + view->ymax - j) * dev->MaxX + i] = color;
        aux = j;
        j = round(a*(++i) + b);
        
        if (j > aux) {
    while (aux < j) {
-     dev->buffer[(dev->MaxY - aux - 1) * dev->MaxX + i] = color; 
+     dev->buffer[(view->ymin + view->ymax - aux) * dev->MaxX + i] = color; 
      aux++;
      }
          }
        if (j < aux) {
    while (aux > j) { 
-     dev->buffer[(dev->MaxY - aux - 1) * dev->MaxX + i] = color;
+     dev->buffer[(view->ymin + view->ymax - aux) * dev->MaxX + i] = color;
      aux--;
      }
          }
@@ -557,6 +557,9 @@ object * Scale(object * ob, float sx, float sy) {
     
   return oob;  
   }
+
+//Implementação da função de cisalhamento
+  matrix * SetMatrixCis(float Sx, float Sy)
 
 hpoint * LinearTransf(hmatrix * m, hpoint * p) {
   hpoint * pt;
