@@ -1,7 +1,7 @@
 // Para executar:
 // gcc -c cg2d.c
-// gcc exemplo_2b.c -o exemplo_2b cg2d.o -lm -lX11
-// ./exemplo_2b
+// gcc exemplo_2c.c -o exemplo_2c cg2d.o -lm -lX11
+// ./exemplo_2c
 
 //Resposta ao exercicio proposto - Nessa forma de visualização, a letra A parece relativamente mais formatada, assim, parece mais fiel a uma representação de um A convencional
 
