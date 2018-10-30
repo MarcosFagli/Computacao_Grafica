@@ -88,6 +88,7 @@ struct HObject2D {
 
 typedef struct HObject2D hObject; 
 
+// Estrutura para uma matriz homogênea para operações lineares no plano - SRU
 struct HMatrix2D {
   float a11, a12, a13,
         a21, a22, a23,
@@ -138,6 +139,10 @@ hmatrix * ComposeMatrix(hmatrix *, hmatrix *);
 hmatrix * SetRotMatrix(float);
 hmatrix * SetSclMatrix(float, float);
 hmatrix * SetSftMatrix(float, float);
+hmatrix * SetMatrixCis(float, float);
+
+/* Operações lineares sobre objetos no SRU 2D */
+hObject * TransObj(hObject *, hmatrix *);
 
 /* visualiza o buffer (SRD) no monitor virtual */
 int Dump2X(bufferdevice *, palette *);

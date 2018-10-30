@@ -559,7 +559,38 @@ object * Scale(object * ob, float sx, float sy) {
   }
 
 //Implementação da função de cisalhamento
-  matrix * SetMatrixCis(float Sx, float Sy)
+hmatrix * SetMatrixCis(float Sx, float Sy) {
+	hmatrix * m;
+
+	m = (hmatrix *) malloc(sizeof(hmatrix));
+	 
+	m->a11 = 1.0;  m->a12 = Sx;   m->a13 = 0;
+	m->a21 = Sy;   m->a22 = 1.0;  m->a23 = 0;
+	m->a31 = 0.0;  m->a32 = 0.0;  m->a33 = 1.0;
+
+	printf("Passou\n");
+
+	return m;
+}
+
+//Transformação do objeto para aplicar operações como de cisalhamento
+hObject * TransObj(hObject * ob, hmatrix * m) {
+  int i;
+  hObject * obj;
+  hpoint * p, * pt;
+
+  obj = CreateHObject(ob->numbers_of_points);
+  
+  for(i=0;i<ob->numbers_of_points;i++) {
+     p = SetHPoint(ob->points[i].x,ob->points[i].y,ob->points[i].w,ob->points[i].color);
+     pt = LinearTransf(m,p);
+     SetHObject(SetHPoint(pt->x,pt->y,pt->w,pt->color),obj);
+     }
+
+  printf("Passou 1\n");
+
+  return obj;
+  }
 
 hpoint * LinearTransf(hmatrix * m, hpoint * p) {
   hpoint * pt;
@@ -569,6 +600,7 @@ hpoint * LinearTransf(hmatrix * m, hpoint * p) {
   pt->x = m->a11*p->x + m->a12*p->y + m->a13*p->w;
   pt->y = m->a21*p->x + m->a22*p->y + m->a23*p->w;
   pt->w = m->a31*p->x + m->a32*p->y + m->a33*p->w;
+  pt->color = p->color;
   
   return pt;
   }
@@ -616,6 +648,8 @@ hmatrix * SetSclMatrix(float sx, float sy) {
   
   return m;
   }
+
+
 
 hmatrix * SetSftMatrix(float dx, float dy) {
   hmatrix * m;
