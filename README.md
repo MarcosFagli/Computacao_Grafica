@@ -1,8 +1,25 @@
 # Computacao_Grafica
 
- -- Trabalho apresentado a disciplina de Computação gráfica da Universidade Federal de São Carlos - UFSCar, graduando no curso de Engenharia de computação.
+Trabalho apresentado a disciplina de Computação gráfica da Universidade Federal de São Carlos - UFSCar, graduando no curso de Engenharia de computação.
 
- -- Disciplina cursada no oitavo semestre do curso e ministrada pelo Docente Doutor Murillo Homem.
+Disciplina cursada no oitavo semestre do curso e ministrada pelo Docente Doutor Murillo Homem.
+
+### Compilação do código
+Para compilar o .c, basta:
+'''
+gcc -c cg2d.c
+'''
+
+Para compilar um exemplo, basta:
+'''
+gcc exemplo.c -o exemplo cg2d.o -lm -lX11
+'''
+Substituindo exemplo pelo nome do arquivo que se deseja compilar
+
+E por fim, para executar, basta:
+'''
+./exemplo
+'''
 
 ## Objetivo da Primeira Entrega
 
