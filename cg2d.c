@@ -38,8 +38,8 @@ hpoint * SetHPoint(float x, float y, float w, int color) {
   hpoint * pnt;
   
   pnt = (hpoint *) malloc(sizeof(hpoint)); 
-  pnt->x = x;
-  pnt->y = y;
+  pnt->x = x/w;
+  pnt->y = y/w;
   pnt->w = w;
   pnt->color = color;
   
@@ -499,6 +499,83 @@ int DrawObjectH(hObject * ob, window * win, bufferdevice * dev, viewport * view)
       }
 
     if ((InWinH(p1,win))&&(InWinH(p2,win))) DrawLineH(p1,p2,win, dev, view,p1->color);
+    }
+
+  return 0;
+  }
+
+// Uma nova função para desenhar as bordas da viewport no monitor
+int DrawViewPort(viewport * port, bufferdevice * dev, int color) {
+  int i, j;
+
+  for(i=port->xmin;i<port->xmax;i++) {
+    dev->buffer[port->ymin * dev->MaxX + i] = color;
+    dev->buffer[port->ymax * dev->MaxX + i] = color; 
+    }
+
+  for(j=port->ymin;j<=port->ymax;j++) {
+    dev->buffer[j * dev->MaxX + port->xmin] = color;
+    dev->buffer[j * dev->MaxX + port->xmax] = color; 
+    }
+
+  return 1;
+  }
+
+//DrawObject modificado para homogeneo incluindo cor
+int DrawObjectHC(hObject * ob, window * win, bufferdevice * dev, viewport * view, int color) {
+  int i;
+  float aux;
+  hpoint * p1, * p2, * paux;
+
+  DrawViewPort(view,dev,1);
+  
+  for(i=0;i<ob->numbers_of_points;i++) {
+    p1 = SetHPoint(ob->points[i].x, ob->points[i].y, ob->points[i].w, ob->points[i].color);
+    p2 = SetHPoint(ob->points[(i+1)%ob->numbers_of_points].x, ob->points[(i+1)%ob->numbers_of_points].y, ob->points[(i+1)%ob->numbers_of_points].w, ob->points[(i+1)%ob->numbers_of_points].color);
+    
+    if (p1->y > p2->y) {
+      aux = p1->y;
+      p1->y = p2->y;
+      p2->y = aux;
+      aux = p1->x;
+      p1->x = p2->x;
+      p2->x = aux;
+      }   
+    if ((p1->y < win->ymax)&&(p2->y > win->ymax)) {
+      paux = InterYH(p1,p2,win->ymax);
+      if (InWinH(paux,win)) {
+        p2 = paux;
+        } 
+      }
+    if ((p1->y < win->ymin)&&(p2->y > win->ymin)) {
+      paux = InterYH(p1,p2,win->ymin);
+      if (InWinH(paux,win)) {
+        p1 = paux;
+        } 
+      }
+
+    if (p1->x > p2->x) {
+      aux = p1->y;
+      p1->y = p2->y;
+      p2->y = aux;
+      aux = p1->x;
+      p1->x = p2->x;
+      p2->x = aux;
+      }      
+    if ((p1->x < win->xmax)&&(p2->x > win->xmax)) {
+      paux = InterXH(p1,p2,win->xmax);
+      if (InWinH(paux,win)) {
+        p2 = paux;
+        } 
+      }
+    if ((p1->x < win->xmin)&&(p2->x > win->xmin)) {
+      paux = InterXH(p1,p2,win->xmin);
+      if (InWinH(paux,win)) {
+        p1 = paux;
+        } 
+      }
+
+    if ((InWinH(p1,win))&&(InWinH(p2,win))) DrawLineH(p1,p2,win, dev, view, color);
     }
 
   return 0;

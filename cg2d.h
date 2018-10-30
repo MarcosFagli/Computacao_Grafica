@@ -128,7 +128,10 @@ int DrawLine(point *, point *, window *, bufferdevice *, int);
 int DrawLineH(hpoint *, hpoint *, window *, bufferdevice *, viewport *, int);
 int DrawObject(object *, window *, bufferdevice *);
 int DrawObjectH	(hObject *, window *, bufferdevice *, viewport *);
+int DrawObjectHC(hObject *, window *, bufferdevice *, viewport *, int);
 int Fill(object *, window *, bufferdevice *, int);
+int DrawViewPort(viewport *, bufferdevice *, int);
+
 
 /* operações com objetos no mundo */
 object * Rotate(object *, float);
