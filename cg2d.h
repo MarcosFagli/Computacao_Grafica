@@ -88,6 +88,15 @@ struct HObject2D {
 
 typedef struct HObject2D hObject; 
 
+//Construção da HObject2D para utilizacao das coordenadas homogeneas e sistema de cor
+struct HCObject2D { 
+  int numbers_of_points;
+  hpoint * points;
+  float corR, corG, corB;
+  };
+
+typedef struct HObject2D hCObject; 
+
 // Estrutura para uma matriz homogênea para operações lineares no plano - SRU
 struct HMatrix2D {
   float a11, a12, a13,
@@ -144,8 +153,13 @@ hmatrix * SetSclMatrix(float, float);
 hmatrix * SetSftMatrix(float, float);
 hmatrix * SetMatrixCis(float, float);
 
+
 /* Operações lineares sobre objetos no SRU 2D */
 hObject * TransObj(hObject *, hmatrix *);
+hObject * RotateH(hObject *, float);
+hObject * RotObj(hObject *, hmatrix *);
+hObject * SclObj(hObject *, hmatrix *);
+void ObjCenter(int, hObject **, window *);
 
 /* visualiza o buffer (SRD) no monitor virtual */
 int Dump2X(bufferdevice *, palette *);

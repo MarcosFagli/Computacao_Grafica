@@ -3,8 +3,6 @@
 // gcc exemplo_2c.c -o exemplo_2c cg2d.o -lm -lX11
 // ./exemplo_2c
 
-//Resposta ao exercicio proposto - Nessa forma de visualização, a letra A parece relativamente mais formatada, assim, parece mais fiel a uma representação de um A convencional
-
 #include "cg2d.h"
 
 int main(int argc, char ** argv) {

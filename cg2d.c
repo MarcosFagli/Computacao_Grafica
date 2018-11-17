@@ -64,7 +64,7 @@ hObject * CreateHObject(int numbers_of_points) {
   ob = (hObject *) malloc(sizeof(hObject));
   ob->numbers_of_points = 0;
   ob->points = (hpoint *) malloc(numbers_of_points*sizeof(hpoint));
- 
+
   return ob;
   }
 
@@ -370,16 +370,16 @@ int DrawLineH(hpoint * p1, hpoint * p2, window * win, bufferdevice * dev, viewpo
        j = round(a*(++i) + b);
        
        if (j > aux) {
-   while (aux < j) {
-     dev->buffer[(view->ymin + view->ymax - aux) * dev->MaxX + i] = color; 
-     aux++;
-     }
+         while (aux < j) {
+           dev->buffer[(view->ymin + view->ymax - aux) * dev->MaxX + i] = color; 
+           aux++;
+           }
          }
        if (j < aux) {
-   while (aux > j) { 
-     dev->buffer[(view->ymin + view->ymax - aux) * dev->MaxX + i] = color;
-     aux--;
-     }
+         while (aux > j) { 
+           dev->buffer[(view->ymin + view->ymax - aux) * dev->MaxX + i] = color;
+           aux--;
+          }
          }
         
        }
@@ -664,8 +664,6 @@ hObject * TransObj(hObject * ob, hmatrix * m) {
      SetHObject(SetHPoint(pt->x,pt->y,pt->w,pt->color),obj);
      }
 
-  printf("Passou 1\n");
-
   return obj;
   }
 
@@ -773,6 +771,75 @@ ColorValues * RGB2HSV(ColorValues * rgb) {
   
   return hsv;
   }
+
+hObject * RotObj(hObject * obj, hmatrix * m) {
+  hObject * oob;
+  int i;
+  
+  oob = CreateHObject(obj->numbers_of_points); 
+  for(i=0;i<obj->numbers_of_points;i++) {
+    SetHObject(LinearTransf(m, &(obj->points[i])),oob);    
+    }
+    
+  return oob;
+  }
+
+hObject * SclObj(hObject * obj, hmatrix * m) {
+  hObject * oob;
+  int i;
+  
+  oob = CreateHObject(obj->numbers_of_points); 
+  for(i=0;i<obj->numbers_of_points;i++) {
+    SetHObject(LinearTransf(m, &(obj->points[i])),oob);    
+    }
+    
+  return oob;
+  }
+
+//Centralizar objetos
+void ObjCenter(int nObjects, hObject ** objs, window * win){
+
+  int xMax = -10000000;
+  int xMin = 10000000;
+  int yMax = -10000000;
+  int yMin = 10000000;
+
+  int xCenter = (win->xmax + win->xmin)/2;
+  int yCenter = (win->ymax + win->ymin)/2;
+  int xObjCenter;
+  int yObjCenter;
+  int dx, dy;
+  hmatrix * matrixTransf;
+  int i, j;
+
+  for(i = 0; i < nObjects; i++){
+    for(j = 0; j < objs[i]->numbers_of_points; j++){
+      if(objs[i]->points[j].x > xMax){
+        xMax = objs[i]->points[j].x;
+      }
+      if(objs[i]->points[j].x < xMin){
+        xMin = objs[i]->points[j].x;
+      }
+      if(objs[i]->points[j].y > yMax){
+        yMax = objs[i]->points[j].y;
+      }
+      if(objs[i]->points[j].y < xMin){
+        yMin = objs[i]->points[j].y;
+      }
+    }
+  }
+
+  xObjCenter = (xMax + xMin)/2;
+  yObjCenter = (yMax + yMin)/2;
+  dx = xCenter - xObjCenter;
+  dy = yCenter - yObjCenter;
+
+  matrixTransf = SetSftMatrix(dx, dy);
+  for(i = 0; i < nObjects; i++){
+    objs[i] = TransObj(objs[i], matrixTransf);
+  }
+}
+
 
 ColorValues * HSV2RGB(ColorValues * hsv) {
   float r, g, b, h, s, v, f, p, q, t;

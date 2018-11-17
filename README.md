@@ -53,8 +53,18 @@ viewports sendo que a primeira deve ser utilizada para visualizar o objeto origi
 
 ## Objetivo da Terceira entrega
 
-a) Refaça o que foi solicitado no item (a) mas agora procure ilustrar a letra “B” (com alguma precisão aceitável). Você terá que determinar os pontos no SRU para esta letra considerando este
+a) (Exemplo 2d) Refaça o que foi solicitado no item (a) mas agora procure ilustrar a letra “B” (com alguma precisão aceitável). Você terá que determinar os pontos no SRU para esta letra considerando este
 sistema de referência.
 
-b) Implemente uma função para nossa biblioteca para preenchimento de polígonos e refaça o item (a) ou (b) exibindo na tela a letra
+b) (Exemplo 2e) Implemente uma função para nossa biblioteca para preenchimento de polígonos e refaça o item (a) ou (b) exibindo na tela a letra
 correspondente, agora preenchida por uma cor que deverá seguir a seguinte regra: suponha que seu RA seja 123456. Então, considerando um sistema aditivo RGB e nossas implementações para mapa de cores, a componente “r” deve valer “2/10”, a componente “g” deve valer “4/10” e a componente “b” a “6/10”.
+
+
+## Objetivo da Quarta entrega
+
+a) aplique uma rotação de 75º apenas no polígono 1 criando um novo objeto, que chamaremos de polígono 3, e visualize os três objetos em uma viewport de 300x200 entradas centralizada no SRD. As arestas do polígono 3 devem ser pintadas na cor verde. Para a visualização, considere uma janela de visualização dada pelo retângulo entre os pontos (-6,-5) e (0,0). Você deverá trabalhar no sentido que os três objetos possam ser visualizados corretamente e sem recortes na viewport considerada. Como comentário no código, descreva qual efeito colateral resulta da operação de rotação.
+
+b) Considerando apenas os polígonos 1 e 2, implemente uma função paracentralizar a “figura formada pelos dois objetos”. Rotacione agora o polígono 2, da nova figura centralizada, considerando um ângulo de 45º, criando um novo objeto. Para isso, utilize o procedimento discutido em aula de forma a evitar o efeito colateral do exercício anterior (cuidado! Preste atenção no que está sendo pedido). Após a
+rotação, escale “a figura” de forma que os três objetos possam ser completamente visualizados na janela de visualização definida pelos pontos (-2,-2) e (2,2). Implemente um programa para a visualização do resultado.
+
+c) Considere novamente os polígonos 1 e 2 conforme a figura acima. Implemente uma função para preencher a intersecção entre os dois objetos dados. O preenchimento deve ser uniforme com uma cor diferente do branco, preto, vermelho, azul ou verde. Visualize o resultado, isto é, desenhe os dois objetos nas cores vermelha e azul e a área de sobreposição devidamente preenchida. Considere a janela de visualização dada pelo retângulo entre os pontos (-10,-10) e (0,0).

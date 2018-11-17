@@ -1,7 +1,7 @@
 // Para executar:
 // gcc -c cg2d.c
-// gcc exemplo_2d.c -o exemplo_2d cg2d.o -lm -lX11
-// ./exemplo_2d
+// gcc exemplo_2e.c -o exemplo_2e cg2d.o -lm -lX11
+// ./exemplo_2e
 
 #include "cg2d.h"
 
@@ -24,9 +24,9 @@ int main(int argc, char ** argv) {
   SetColor(0,0,1,palheta);
   SetColor(1,1,1,palheta);
   
-  poligono1 = CreateHObject(9);
-  poligono2 = CreateHObject(6);
-  poligono3 = CreateHObject(6);
+  poligono1 = CreateHObject(9,0.2,0.3,0.1);
+  poligono2 = CreateHObject(6,0,0,0);
+  poligono3 = CreateHObject(6,0,0,0);
   
   SetHObject(SetHPoint(-8.0,2.0,1,3), poligono1);
   SetHObject(SetHPoint(-8.0,-9.0,1,3), poligono1);
